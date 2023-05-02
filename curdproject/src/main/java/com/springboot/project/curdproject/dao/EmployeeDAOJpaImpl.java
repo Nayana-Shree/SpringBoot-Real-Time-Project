@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.springboot.project.curdproject.entity.Employee;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Id;
 import jakarta.persistence.TypedQuery;
 
 @Repository
@@ -35,6 +36,41 @@ public class EmployeeDAOJpaImpl implements EmployeeDAO{
 
         // eturn the results
         return employees;
+    }
+
+
+    @Override
+    public Employee findById(int theId) {
+        
+        //get employee
+        Employee theEmployee = entityManager.find(Employee.class,theId);
+
+        //return employee
+        return theEmployee;
+
+    }
+
+
+    @Override
+    public Employee save(Employee theEmployee) {
+       
+        // save Employee
+        Employee dbEmployee = entityManager.merge(theEmployee);
+
+        //return Employee
+        return dbEmployee;
+
+    }
+
+
+    @Override
+    public void deleteById(int theId) {
+        
+        //find employee by Id
+        Employee theEmployee = entityManager.find(Employee.class,theId);
+
+        //delete employee
+        entityManager.remove(theEmployee);
     }
 
     
